@@ -113,10 +113,9 @@
     "node": ">=14"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --ext .ts,.tsx,.js --fix",
-      "prettier --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,ts,tsx}": ["eslint --ext .ts,.tsx,.js --fix", "prettier --write", "git add"],
+    "*.@(yml|yaml)": ["prettier --parser yaml --write"],
+    "*.md": ["prettier --parser markdown --write"],
+    "*.json": ["prettier --parser json --write"]
   }
 }
