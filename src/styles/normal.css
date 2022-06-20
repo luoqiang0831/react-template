@@ -14,8 +14,7 @@ body {
   -ms-touch-action: manipulation; /* 允许触摸驱动的平移和拖拽缩放 */
   touch-action: manipulation; /* 允许触摸驱动的平移和拖拽缩放 */
   -webkit-text-size-adjust: 100%; /* 关闭IOS横屏时，自动调整字体大小的功能 */
-  font-family: "PingFang SC", "Helvetica Neue", "Roboto", Noto Sans,
-    "Helvetica Neue", sans-serif, Arial;
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Roboto', Noto Sans, 'Helvetica Neue', sans-serif, Arial;
   font-size: 14px;
   scroll-behavior: smooth; /* 平滑滚动 */
   overflow-y: auto;

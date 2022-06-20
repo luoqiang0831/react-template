@@ -2,19 +2,19 @@
  * 自己封装的异步请求函数
  * 所有http请求都将经过这里
  * **/
-import React from "react";
-import { extend, ResponseError } from "umi-request";
-import { SERVER_GATEWAY } from "./constants";
-import { isObject, isFunction } from "@/utils/tools";
-import { Toast } from "antd-mobile";
+import React from "react"
+import { extend, ResponseError } from "umi-request"
+import { SERVER_GATEWAY } from "./constants"
+import { isObject, isFunction } from "@/utils/tools"
+import { Toast } from "antd-mobile"
 // import axios from "axios";
 
 interface Result {
-  code: string | number;
-  data: unknown;
-  message?: string;
-  msg?: string;
-  success: boolean;
+  code: string | number
+  data: unknown
+  message?: string
+  msg?: string
+  success: boolean
 }
 
 // interface RequestParams {
@@ -39,7 +39,7 @@ const codeMessage: { [key: number]: string } = {
   502: "网关错误。",
   503: "服务不可用，服务器暂时过载或维护。",
   504: "网关超时。",
-};
+}
 
 // url白名单，返回不做统一拦截
 const urlWhiteList = [
@@ -48,23 +48,23 @@ const urlWhiteList = [
   "/mallapi/mallunion/getLogo",
   "/mallUnion/unionMallConfig/findUsableList", // 获取汉堡包接口
   "/api/health/order/orderSubmit", // 提交订单
-];
+]
 // 排除网关
 const GATEWAY_PATH = [
   "mallapi/mallunion/getLogo",
   "mallapi/location/changecity", //设置历史城市
-];
+]
 // HTTP状态码
 const errorHandler = (error: ResponseError) => {
-  const { response } = error;
-  const errortext = codeMessage[response.status] || response.statusText;
-  const { status, url } = response;
+  const { response } = error
+  const errortext = codeMessage[response.status] || response.statusText
+  const { status, url } = response
 
   console.error({
     message: `请求错误 ${status}: ${url}`,
     description: errortext,
-  });
-};
+  })
+}
 
 // 可以针对于中间件进行拦截response
 // request.interceptors.response.use(async response => {
@@ -89,64 +89,56 @@ const errorHandler = (error: ResponseError) => {
 export const requestMethod = async (params: any): Promise<any> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // const navigate = useNavigate();
-  let url = params;
+  let url = params
   // 对象情况下 并且有url的情况下
   if (isObject(params) && params.url) {
-    url = params.url;
+    url = params.url
     params = {
       // TODO: 添加通用参数
       ...params,
-    };
+    }
   }
   // data为object时， 兼容不同的传参形式
   if (params?.data && isObject(params?.data)) {
     params.data = {
       // 接口入参通用添加字段的地方
       ...params.data,
-    };
+    }
   }
 
   // 方法情况下
   if (isFunction(params)) {
-    url = params();
+    url = params()
   }
   // 添加中间件
   const CustomRequest = extend({
     errorHandler, // 默认错误处理
     // 判断是否写入域名 或者 排除上面的网关地址
     prefix:
-      url.substr(0, 6).indexOf("http") === -1 &&
-      GATEWAY_PATH.every((i) => url.indexOf(i) === -1)
-        ? SERVER_GATEWAY
-        : "", // 判断是否直接使用http域名 不经过serverUrl
+      url.substr(0, 6).indexOf("http") === -1 && GATEWAY_PATH.every((i) => url.indexOf(i) === -1) ? SERVER_GATEWAY : "", // 判断是否直接使用http域名 不经过serverUrl
     // 默认请求头
     headers: {
       // Authorization: getToken() ? `Bearer ${getToken()}` : null, // 携带token
     } as Record<string, string>,
     credentials: "include", // 默认请求是否带上cookie
-  });
+  })
 
-  const result = await CustomRequest(url, params);
+  const result = await CustomRequest(url, params)
 
   // 白名单内的url直接返回，异常自行捕捉
   if (urlWhiteList.includes(url.split("?")[0])) {
-    return Promise.resolve(result);
+    return Promise.resolve(result)
   }
 
-  const {
-    success = false,
-    message,
-    code,
-    msg,
-  } = (result as unknown as Result) || {};
+  const { success = false, message, code, msg } = (result as unknown as Result) || {}
 
   // 内部服务错误 具体错误的code和后端约定
   if (code !== "0000") {
     // 如果预览模式则跳过
     Toast.show({
       content: message || msg,
-    });
-    return Promise.reject({ msg: `接口请求错误： ${url}` });
+    })
+    return Promise.reject({ msg: `接口请求错误： ${url}` })
   }
-  return Promise.resolve(result);
-};
+  return Promise.resolve(result)
+}

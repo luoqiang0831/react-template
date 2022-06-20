@@ -1,34 +1,34 @@
 export const loadWxSdk = () => {
   return new Promise((reslove, reject) => {
-    let script = document.createElement("script");
-    const flag = "__wxsdk__";
+    let script = document.createElement("script")
+    const flag = "__wxsdk__"
     if (document.getElementById(`${flag}`) !== null) {
-      script = document.getElementById(`${flag}`) as HTMLScriptElement;
+      script = document.getElementById(`${flag}`) as HTMLScriptElement
     } else {
-      script.type = "text/javascript";
-      script.id = `${flag}`;
-      script.async = true;
-      script.src = "https://res.wx.qq.com/open/js/jweixin-1.3.2.js";
+      script.type = "text/javascript"
+      script.id = `${flag}`
+      script.async = true
+      script.src = "https://res.wx.qq.com/open/js/jweixin-1.3.2.js"
     }
 
     script.addEventListener("load", function () {
-      console.log("wx sdk 加载完成");
+      console.log("wx sdk 加载完成")
       reslove({
         status: true,
-      });
-    });
+      })
+    })
 
     script.addEventListener("error", function (error) {
       reject({
         status: false,
         msg: error,
-      });
-    });
+      })
+    })
     if (document.getElementById(`${flag}`) === null) {
-      document.head.appendChild(script);
+      document.head.appendChild(script)
     }
-  });
-};
+  })
+}
 
 /**
  * 判断是否在小程序中
@@ -41,18 +41,18 @@ export const isMinProgram = (): Promise<boolean> => {
       loadWxSdk().then((res) => {
         window.wx.miniProgram?.getEnv((res: any) => {
           if (res.miniprogram) {
-            reslove(true);
+            reslove(true)
           } else {
-            reslove(false);
+            reslove(false)
           }
-        });
+        })
         // 兜底操作
         setTimeout(() => {
-          reslove(false);
-        }, 500);
-      });
+          reslove(false)
+        }, 500)
+      })
     } else {
-      reslove(false);
+      reslove(false)
     }
-  });
-};
+  })
+}

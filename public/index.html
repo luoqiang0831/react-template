@@ -8,38 +8,13 @@
     content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover" />
   <!-- 解决icon 图片问题-->
   <meta name="referrer" content="no-referrer" />
-  <link rel="dns-prefetch" href="//corp.m.dongfangfuli.com" />
-  <link rel="dns-prefetch" href="//at.alicdn.com/" />
-  <link rel="dns-prefetch" href="//webchat-rl.dongfangfuli.com" />
-  <link rel="dns-prefetch" href="//p0.meituan.net" />
-  <title>东福前端模板</title>
+  <title>react模板</title>
 </head>
 
 <body>
   <div id="app-root"></div>
-  <div id="app-tooltip"></div>
-  <div id="tooltip"></div>
   <!-- <%= htmlWebpackPlugin.options.registerServiceWorker %>  -->
   <%= htmlWebpackPlugin.options.scripts %>
 </body>
-<script>
-  try {
-    window.addEventListener("load", function () {
-      var scriptUrl =
-        "https://webchat-rl.dongfangfuli.com/javascripts/7moorInit.js?accessId={key}&autoShow=false&language=ZHCN";
-      var sdk_key = "67bb78e0-077c-11ea-8c8a-052f06e36348"; // 默认官网
-
-      var s = document.createElement("script");
-      s.src = scriptUrl.replace("{key}", sdk_key); // 官网
-      s.async = true;
-      document.body.appendChild(s);
-    });
-  } catch (e) {
-    console.log(e);
-    window.qimoChatClick = () => {
-      console.log("客服报错了！！！");
-    };
-  }
-</script>
 
 </html>

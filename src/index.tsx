@@ -1,22 +1,22 @@
 /** APP入口 **/
 // import "core-js/stable";
-import "regenerator-runtime/runtime";
-import React from "react";
-import { createRoot } from "react-dom/client";
-import Root from "./App";
-import Rem from "./utils/rem";
+import "regenerator-runtime/runtime"
+import React from "react"
+import { createRoot } from "react-dom/client"
+import Root from "./App"
+import Rem from "./utils/rem"
 /** 公共样式 **/
-import "./styles/normal.css";
-import "./styles/common.less";
-import "./styles/global.less";
+import "./styles/normal.css"
+import "./styles/common.less"
+import "./styles/global.less"
 
-Rem();
+Rem()
 
-createRoot(document.getElementById("app-root") as Element).render(<Root />);
+createRoot(document.getElementById("app-root") as Element).render(<Root />)
 
 // HMR
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept()
 }
 
 // serviceWorker 卸载

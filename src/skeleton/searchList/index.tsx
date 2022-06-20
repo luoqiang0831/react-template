@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-import ContentLoader from "react-content-loader";
+import ContentLoader from "react-content-loader"
 
 const SearchList = (): JSX.Element => (
   <ContentLoader viewBox="0 0 750 700">
@@ -13,6 +13,6 @@ const SearchList = (): JSX.Element => (
     <rect x="24" y="300" rx="4" ry="4" width="702" height="50" />
     <rect x="24" y="360" rx="4" ry="4" width="702" height="50" />
   </ContentLoader>
-);
+)
 
-export default SearchList;
+export default SearchList

@@ -10,6 +10,7 @@ postcss.config.js
 commitlint.config.js
 .eslintrc.json
 package-lock.json
+tsconfig.json
 
 # react-daterange-picker
 # react-date-range

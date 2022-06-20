@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "mocha": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 9, // 默认的js版本
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true // 表示支持jsx
+    },
+    "allowImportExportEverywhere": true,
+    "sourceType": "module", // esm 模式
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "rules": {
+    // "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    // "import/extensions": [
+    //   "error",
+    //   "ignorePackages",
+    //   {
+    //     "js": "never",
+    //     "jsx": "never",
+    //     "ts": "never",
+    //     "tsx": "never"
+    //   }
+    // ],
+    // "import/no-unresolved": [2, { "commonjs": true, "amd": true }]
+    // // "semi": "warn",
+    // "no-unused-vars": "off",
+    // "no-cond-assign": "error",
+    // "no-debugger": "warn",
+    // "no-dupe-args": "error",
+    // "no-caller": "error",
+    // "no-unmodified-loop-condition": "error",
+    // "no-with": "error",
+    // "no-catch-shadow": "error",
+    // "react/no-unescaped-entities": "off",
+    // "react-hooks/rules-of-hooks": "error",
+    // "react/prop-types": 0,
+    // "@typescript-eslint/explicit-function-return-type": 0, //{ "allowTypedFunctionExpressions": false }
+    // // "prettier/prettier": "warn"
+    // "prettier/prettier": [
+    //   "warn",
+    //   {
+    //     "useTabs": false,
+    //     "proseWrap": "preserve",
+    //     "endOfLine": "auto"
+    //   },
+    //   {
+    //     "usePrettierrc": false
+    //   }
+    // ]
+  }
+}

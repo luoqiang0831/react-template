@@ -1,39 +1,44 @@
 /** 这是用于生产环境的webpack配置文件 **/
 
-const path = require("path");
-const webpack = require("webpack"); // webpack核心
-const BaseConfig = require("./webpack.base.config"); // 公共配置
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 将CSS提取出来，而不是和js混在一起
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); // 对CSS进行压缩
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // 生成html
+const path = require("path")
+const webpack = require("webpack") // webpack核心
+const BaseConfig = require("./webpack.base.config") // 公共配置
+const MiniCssExtractPlugin = require("mini-css-extract-plugin") // 将CSS提取出来，而不是和js混在一起
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin") // 对CSS进行压缩
+const HtmlWebpackPlugin = require("html-webpack-plugin") // 生成html
 // const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 每次打包前清除旧的build文件夹
-const WorkboxPlugin = require("workbox-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin"); // 用于直接复制public中的文件到打包的最终文件夹中
+const WorkboxPlugin = require("workbox-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin") // 用于直接复制public中的文件到打包的最终文件夹中
 // const FaviconsWebpackPlugin = require("favicons-webpack-plugin"); // 自动生成各尺寸的favicon图标 webpack5 wating up
-const TerserPlugin = require("terser-webpack-plugin"); // 对js进行压缩
+const TerserPlugin = require("terser-webpack-plugin") // 对js进行压缩
 // const webpackbar = require("webpackbar"); // 进度条
-const { merge } = require("webpack-merge");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin; // 分析打包后各个包的大小
-const PreloadWebpackPlugin = require("preload-webpack-plugin");
-// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin; // 分析打包后各个包的大小
+const { merge } = require("webpack-merge")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin // 分析打包后各个包的大小
+const PreloadWebpackPlugin = require("preload-webpack-plugin")
 /**
  * 基础路径
- * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://isluo.com/work/pwa/"
+ * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://abc.com/work/pwa/"
  * 根据你自己的需求填写
- * "/" 就是根路径，假如最终项目上线的地址为：https://isluo.com/， 那就不用改
+ * "/" 就是根路径，假如最终项目上线的地址为：https://abc.com/， 那就不用改
  * **/
-const PUBLIC_PATH = "/";
-const isEnvAnalyz = process.env.NODE_BUILD === "analyz";
-
-console.log(isEnvAnalyz);
+const PUBLIC_PATH = "/"
+const isEnvAnalyz = process.env.NODE_BUILD === "analyz"
 
 module.exports = merge(BaseConfig, {
   mode: "production",
   entry: path.resolve(__dirname, "../src", "index"),
+  //entry:{ // 多入口打包
+  //   home: {
+  //     import: path.resolve(__dirname, "../src", "index")
+  //     dependOn: ['common']
+  // },
+  // module: {
+  //   import: ['react', 'react-dom', 'react-router-dom', 'axios', 'swr'], //'prop-types'
+  //   runtime: 'runtime'
+  // }},
   output: {
+    clean: true,
     path: path.resolve(__dirname, "../dist"), // 将文件打包到此目录下
     publicPath: PUBLIC_PATH, // 在生成的html中，文件的引入路径会相对于此地址，生成的css中，以及各类图片的URL都会相对于此地址
     filename: "js/[name].[contenthash:4].js",
@@ -73,13 +78,6 @@ module.exports = merge(BaseConfig, {
   //   "react-dom": "window.ReactDOM",
   // },
   plugins: [
-    /**
-     * 打包前删除上一次打包留下的旧代码（根据output.path）
-     * https://github.com/johnagan/clean-webpack-plugin
-     * **/
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["**/*", "!dll/**"],
-    }),
     // new webpackbar(), // 打包时美化进度条
     // new AntdDayjsWebpackPlugin(), // dayjs 替代 momentjs
     /**
@@ -95,7 +93,7 @@ module.exports = merge(BaseConfig, {
      * https://github.com/webpack-contrib/mini-css-extract-plugin
      * **/
     new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash:8].css", // 生成的文件名
+      filename: "css/[name].[contenthash:8].css?v=[contenthash]", // 生成的文件名
     }),
     /**
      * 自动生成HTML，并注入各参数
@@ -213,4 +211,4 @@ module.exports = merge(BaseConfig, {
       // ],
     }),
   ],
-});
+})

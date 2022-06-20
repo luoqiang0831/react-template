@@ -1,37 +1,36 @@
 /** 这是用于生产环境的webpack配置文件 **/
 
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 将CSS提取出来，而不是和js混在一起,修改css的引入以文件的形式,用之前style标签注入,用之后以link标签引入样式
-const { generateScopedName } = require("./rename");
-const threadLoader = require("thread-loader"); // 多进程打包，HappyPack也是，但是已经不维护了，正常loader结尾的表示转译，因为webpack只识别js和json格式的文件，需要识别其它的都需要其他工具转译
+const path = require("path")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin") // 将CSS提取出来，而不是和js混在一起,修改css的引入以文件的形式,用之前style标签注入,用之后以link标签引入样式
+const { generateScopedName } = require("./rename")
+const threadLoader = require("thread-loader") // 多进程打包，HappyPack也是，但是已经不维护了，正常loader结尾的表示转译，因为webpack只识别js和json格式的文件，需要识别其它的都需要其他工具转译
 /**
  * 基础路径
  * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://isluo.com/work/pwa/"
  * 根据你自己的需求填写
  * "/" 就是根路径，假如最终项目上线的地址为：https://isluo.com/， 那就不用改
  * **/
-const lessRegex = /\.less$/; // 新增
-const lessModuleRegex = /\.module\.less$/; // 新增
-const isEnvProduction =
-  process.env.NODE_BUILD === "prd" || process.env.NODE_BUILD === "analyz";
+const lessRegex = /\.less$/ // 新增
+const lessModuleRegex = /\.module\.less$/ // 新增
+const isEnvProduction = process.env.NODE_BUILD === "prd" || process.env.NODE_BUILD === "analyz"
 
 const jsWorkerPool = {
   poolTimeout: 2000,
-};
+}
 
 const cssWorkerPool = {
   workerParallelJobs: 2,
   poolTimeout: 2000,
-};
+}
 
 // 如果在本地才开启
 if (process.env.NODE_BUILD === "local") {
-  threadLoader.warmup(jsWorkerPool, ["babel-loader"]); // 预热一般放在其它loader模块前，把后面指定的模块载入node.js模块的缓存中
+  threadLoader.warmup(jsWorkerPool, ["babel-loader"]) // 预热一般放在其它loader模块前，把后面指定的模块载入node.js模块的缓存中
   threadLoader.warmup(cssWorkerPool, [
     "css-loader",
     "less-loader",
     "postcss-loader", // 浏览器属性兼容加上对应的前缀
-  ]);
+  ])
 }
 
 module.exports = {
@@ -43,13 +42,9 @@ module.exports = {
         use: [
           "thread-loader",
           {
-            loader: "babel-loader",
+            loader: "babel-loader?cacheDirectory",
             options: {
-              presets: [
-                "@babel/preset-env",
-                "@babel/preset-react",
-                "@babel/preset-typescript",
-              ],
+              presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
               cacheDirectory: true, //开启babelh缓存，第二次构建时，会读取之前的缓存
             },
           },
@@ -64,6 +59,13 @@ module.exports = {
           dataUrlCondition: {
             maxSize: 4 * 1024, // 4kb
           },
+        },
+      },
+      {
+        test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/[name].[contenthash:8].[ext]",
         },
       },
       // webpack 4
@@ -119,10 +121,7 @@ module.exports = {
               sourceMap: false,
               modules: {
                 getLocalIdent: (context, localIdentName, localName) => {
-                  return generateScopedName("[local]__[hash:base64:4]")(
-                    localName,
-                    context.resourcePath
-                  );
+                  return generateScopedName("[local]__[hash:base64:4]")(localName, context.resourcePath)
                 },
                 // localIdentName: "[local]__[hash:base64:4]",
               },
@@ -164,11 +163,7 @@ module.exports = {
       // },
       {
         test: /\.css$/,
-        use: [
-          isEnvProduction ? MiniCssExtractPlugin.loader : "style-loader",
-          "css-loader",
-          "postcss-loader",
-        ],
+        use: [isEnvProduction ? MiniCssExtractPlugin.loader : "style-loader", "css-loader", "postcss-loader"],
       },
       // {
       //   // wasm文件解析
@@ -190,4 +185,4 @@ module.exports = {
       "@": path.resolve(__dirname, "../src"),
     },
   },
-};
+}

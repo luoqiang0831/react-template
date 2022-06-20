@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import useRequest from "@ahooksjs/use-request";
-import { test, test2 } from "./service";
-import { useTranslation } from "react-i18next";
-import { InfiniteScroll, List, DotLoading } from "antd-mobile";
-import useLoadDemo from "./useLoadDemo";
+import React, { useEffect, useState } from "react"
+import useRequest from "@ahooksjs/use-request"
+import { test, test2 } from "./service"
+import { useTranslation } from "react-i18next"
+import { InfiniteScroll, List, DotLoading } from "antd-mobile"
+import useLoadDemo from "./useLoadDemo"
 
 interface Result {
-  code: number;
+  code: number
   data: Array<{
-    id: string;
-    email: string;
-  }>;
+    id: string
+    email: string
+  }>
 }
 // 上拉加载更多内容
 const InfiniteScrollContent = ({ hasMore }: { hasMore?: boolean }) => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
   return (
     <>
       {hasMore ? (
@@ -26,13 +26,13 @@ const InfiniteScrollContent = ({ hasMore }: { hasMore?: boolean }) => {
         <span>---{t("我是有底线的 ")}---</span>
       )}
     </>
-  );
-};
+  )
+}
 
 // 推荐使用方式
 const HotelSearchIndex = () => {
-  const { t, i18n } = useTranslation();
-  const [result, setResult] = useState<Array<any>>([]);
+  const { t, i18n } = useTranslation()
+  const [result, setResult] = useState<Array<any>>([])
   // 用法 1
   // const { data = {} } = useRequest(
   //   {
@@ -82,7 +82,7 @@ const HotelSearchIndex = () => {
   //   run({ test: 123 });
   // }, []);
 
-  const { state, records, handlePageChange, hasMore } = useLoadDemo();
+  const { state, records, handlePageChange, hasMore } = useLoadDemo()
   return (
     <div style={{ position: "relative", height: "100vh", overflow: "scroll" }}>
       <h3>{t("结果输出")}</h3>
@@ -100,14 +100,11 @@ const HotelSearchIndex = () => {
           </List.Item>
         ))}
       </List>
-      <InfiniteScroll
-        loadMore={() => handlePageChange(state.pageNum + 1)}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={() => handlePageChange(state.pageNum + 1)} hasMore={hasMore}>
         <InfiniteScrollContent hasMore={hasMore} />
       </InfiniteScroll>
     </div>
-  );
-};
+  )
+}
 
-export default HotelSearchIndex;
+export default HotelSearchIndex

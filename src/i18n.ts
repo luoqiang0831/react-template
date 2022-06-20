@@ -1,6 +1,6 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import Cookies from "js-cookie";
+import i18n from "i18next"
+import { initReactI18next } from "react-i18next"
+import Cookies from "js-cookie"
 // not like to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
@@ -41,6 +41,6 @@ i18n
     // react: {
     //   wait: true,
     // },
-  });
+  })
 
-export default i18n;
+export default i18n

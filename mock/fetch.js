@@ -1,31 +1,25 @@
-const axios = require("axios");
-const qs = require("qs");
+const axios = require('axios')
+const qs = require('qs')
 const instance = axios.create({
-  baseURL: "",
+  baseURL: '',
   timeout: 60 * 1000,
-});
+})
 
 // POST传参序列化
 instance.interceptors.request.use(
   (config) => {
-    const { headers } = config;
-    const contentType = [
-      "application/x-www-form-urlencoded",
-      "application/x-www-form-urlencoded; charset=UTF-8",
-    ];
-    if (
-      config.method === "post" &&
-      contentType.includes(headers["Content-Type"])
-    ) {
-      config.data = qs.stringify(config.data);
+    const { headers } = config
+    const contentType = ['application/x-www-form-urlencoded', 'application/x-www-form-urlencoded; charset=UTF-8']
+    if (config.method === 'post' && contentType.includes(headers['Content-Type'])) {
+      config.data = qs.stringify(config.data)
     }
-    return config;
+    return config
   },
   (error) => {
-    window.alert("错误的传参");
-    return Promise.reject(error);
-  }
-);
+    window.alert('错误的传参')
+    return Promise.reject(error)
+  },
+)
 
 function get(url, params) {
   return new Promise((resolve, reject) => {
@@ -33,16 +27,16 @@ function get(url, params) {
       .get(url, params)
       .then(
         (response) => {
-          resolve(response.data);
+          resolve(response.data)
         },
         (err) => {
-          reject(err);
-        }
+          reject(err)
+        },
       )
       .catch((error) => {
-        reject(error);
-      });
-  });
+        reject(error)
+      })
+  })
 }
 
 function post(url, params, config = {}) {
@@ -54,19 +48,19 @@ function post(url, params, config = {}) {
           resolve({
             data: response.data,
             res: response,
-          });
+          })
         },
         (err) => {
-          reject(err);
-        }
+          reject(err)
+        },
       )
       .catch((error) => {
-        reject(error);
-      });
-  });
+        reject(error)
+      })
+  })
 }
 
 module.exports = {
   get,
   post,
-};
+}
