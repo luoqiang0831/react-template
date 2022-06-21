@@ -68,5 +68,5 @@
   // "files": ["scr/leo.ts"], // 指定编译文件是src目录下的leo.ts文件
   // "extends": "./tsconfig.base.json" //把基础配置抽离成tsconfig.base.json文件，然后引入
   "include": ["src/**/*"], // 指定编译需要编译的文件或目录。
-  "exclude": ["node_modules", "config", "build", "dist", "scripts", "webpack", "jest", "deploy.js"] // 作用是指定编译器需要排除的文件或文件夹。
+  "exclude": ["node_modules", "config", "build", "dist", "scripts", "webpack", "jest", "deploy.js", "jest.config.js"] // 作用是指定编译器需要排除的文件或文件夹。
 }

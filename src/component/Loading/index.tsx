@@ -17,10 +17,12 @@ export type loadingStatus = {
   timedOut?: boolean
   error?: any
   retry?: () => void
+  children?: React.ReactNode
 }
 
-export default function LoadingComponent(): JSX.Element {
+const LoadingComponent: React.FC<loadingStatus> = (props) => {
   const { t, i18n } = useTranslation()
+
   function makeType(p: loadingStatus) {
     let msg
     if (p.error) {
@@ -44,3 +46,5 @@ export default function LoadingComponent(): JSX.Element {
     </div>
   )
 }
+
+export default LoadingComponent

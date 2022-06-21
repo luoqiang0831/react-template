@@ -11,6 +11,9 @@ commitlint.config.js
 .eslintrc.json
 package-lock.json
 tsconfig.json
+jest.config.js
+fileTransformer.js
+__mocks__
 
 # react-daterange-picker
 # react-date-range
