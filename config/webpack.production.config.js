@@ -41,7 +41,7 @@ module.exports = merge(BaseConfig, {
     clean: true,
     path: path.resolve(__dirname, "../dist"), // 将文件打包到此目录下
     publicPath: PUBLIC_PATH, // 在生成的html中，文件的引入路径会相对于此地址，生成的css中，以及各类图片的URL都会相对于此地址
-    filename: "js/[name].[contenthash:4].js",
+    filename: "js/[name].[contenthash:4].js", // 可以加更新搓?v=[contenthash]
     chunkFilename: "js/[name].chunk.js",
     assetModuleFilename: "images/[name]-[contenthash:4][ext][query]", // 设置静态文件输入目录
   },
@@ -182,7 +182,13 @@ module.exports = merge(BaseConfig, {
     }),
     new PreloadWebpackPlugin({
       rel: "preload",
-      as: "style",
+      as(entry) {
+        if (/\.css$/.test(entry)) return "style"
+        if (/\.woff$/.test(entry)) return "font"
+        if (/\.png$/.test(entry)) return "image"
+        return "script"
+      },
+      include: "allChunks",
     }),
     // 包体积分析
     isEnvAnalyz ? new BundleAnalyzerPlugin() : () => {},

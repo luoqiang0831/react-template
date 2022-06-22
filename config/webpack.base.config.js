@@ -6,9 +6,9 @@ const { generateScopedName } = require("./rename")
 const threadLoader = require("thread-loader") // 多进程打包，HappyPack也是，但是已经不维护了，正常loader结尾的表示转译，因为webpack只识别js和json格式的文件，需要识别其它的都需要其他工具转译
 /**
  * 基础路径
- * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://isluo.com/work/pwa/"
+ * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://abc.com/work/pwa/"
  * 根据你自己的需求填写
- * "/" 就是根路径，假如最终项目上线的地址为：https://isluo.com/， 那就不用改
+ * "/" 就是根路径，假如最终项目上线的地址为：https://abc.com/， 那就不用改
  * **/
 const lessRegex = /\.less$/ // 新增
 const lessModuleRegex = /\.module\.less$/ // 新增
