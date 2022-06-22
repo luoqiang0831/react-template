@@ -21,16 +21,16 @@ module.exports = function (api) {
     plugins: [
       "@babel/plugin-transform-runtime",
       "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-syntax-dynamic-import", // 支持import 懒加载
       ["@babel/plugin-proposal-decorators", { legacy: true }],
-      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-class-properties", // 识别class组件
       "@babel/plugin-proposal-optional-chaining",
       "@babel/plugin-transform-arrow-functions",
       "@babel/plugin-proposal-nullish-coalescing-operator",
-      !api.env("production") && "react-refresh/babel",
+      !api.env("production") && "react-refresh/babel", //react fast hot
       // "react-loadable/babel",
       [
-        "import",
+        "import", //andt-mobile按需加载  true是less，如果不用less style的值可以写'css'
         {
           libraryName: "antd",
           style: true,
