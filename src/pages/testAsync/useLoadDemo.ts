@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { sleep } from "antd-mobile/es/utils/sleep"
-import useRequest from "@ahooksjs/use-request"
+import { useRequest } from "ahooks"
 
 interface ILoadState {
   pageNum: number
@@ -32,13 +32,18 @@ const useLoadDemo = () => {
     hasMore: true,
   })
 
-  const { loading, run } = useRequest<Pick<ILoadState, "pageNum" | "pageSize"> & { list: Array<string> }>(mockRequest, {
+  // const { loading, run } = useRequest<Pick<ILoadState, "pageNum" | "pageSize"> & { list: Array<string> }>(mockRequest, {
+  //   manual: true,
+  // })
+
+  const { loading, run } = useRequest(mockRequest, {
     manual: true,
   })
 
   // 修改加载页码
   const handlePageChange = async (pageNum: number) => {
     console.log("handlePageChange")
+    // @ts-ignore
     const { list = [] } = await run(pageNum)
     setState((state) => ({
       ...state,

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import useRequest from "@ahooksjs/use-request"
 import { test, test2 } from "./service"
 import { useTranslation } from "react-i18next"
 import { InfiniteScroll, List, DotLoading } from "antd-mobile"

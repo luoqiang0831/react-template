@@ -1,5 +1,5 @@
 import React, { StrictMode } from "react"
-import { UseRequestProvider } from "@ahooksjs/use-request"
+// import { UseRequestProvider } from "ahooks/use-request"
 import { requestMethod } from "@/utils/request"
 import Routers from "./routers"
 import "./i18n"
@@ -14,9 +14,9 @@ import "./i18n"
 export default function RootContainer(): JSX.Element {
   return (
     <StrictMode>
-      <UseRequestProvider value={{ requestMethod }}>
-        <Routers />
-      </UseRequestProvider>
+      {/* <UseRequestProvider value={{ requestMethod }}> */}
+      <Routers />
+      {/* </UseRequestProvider> */}
     </StrictMode>
   )
 }
